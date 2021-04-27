@@ -1,3 +1,5 @@
+package ex1;
+
 import java.util.Objects;
 
 public class Person {
@@ -40,7 +42,7 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Person{" +
+        return "ex1.Person{" +
                 "name='" + name + '\'' +
                 ", age=" + age +
                 '}';

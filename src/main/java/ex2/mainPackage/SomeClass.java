@@ -1,4 +1,4 @@
-package mainPackage;
+package ex2.mainPackage;
 
 public class SomeClass {
     private int fieldA;

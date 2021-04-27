@@ -1,3 +1,5 @@
+package ex4;
+
 public class Matrix {
     int rows;
     int columns;
