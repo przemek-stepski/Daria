@@ -5,10 +5,14 @@ import java.util.Objects;
 public class Person {
     private String name;
     private  int age;
+    private int pesel;
+    private int kidsNo;
 
-    public Person(String name, int age) {
+    public Person(String name, int age, int pesel, int kidsNo) {
         this.name = name;
         this.age = age;
+        this.pesel = pesel;
+        this.kidsNo = kidsNo;
     }
 
     public String getName() {
