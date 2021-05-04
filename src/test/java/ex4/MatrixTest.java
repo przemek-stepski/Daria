@@ -3,8 +3,11 @@ package ex4;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 class MatrixTest {
 
@@ -13,15 +16,15 @@ class MatrixTest {
         Matrix testMatrix = makeMatrix2x2();
         Matrix other = makeMatrix2x2();
 
-        assertTrue(testMatrix.equalTo(other));
+        assertTrue(testMatrix.equalto(other));
     }
 
     @Test
-    void shouldReturnFaseIfMatrixOtherIsNull() {
+    void shouldReturnFalseIfMatrixOtherIsNull() {
         Matrix testMatrix = makeMatrix2x2();
         Matrix other = null;
 
-        assertFalse(testMatrix.equalTo(other));
+        assertFalse(testMatrix.equalto(other));
     }
 
     @Test
@@ -30,7 +33,7 @@ class MatrixTest {
         Matrix other = makeMatrix2x2();
         other.matrix[0][0] = 88;
 
-        assertFalse(testMatrix.equalTo(other));
+        assertFalse(testMatrix.equalto(other));
     }
 
     @Test
@@ -38,14 +41,114 @@ class MatrixTest {
         Matrix testMatrix = makeMatrix2x2();
         Matrix other = makeMatrix2x3();
 
-        assertFalse(testMatrix.equalTo(other));
+        assertFalse(testMatrix.equalto(other));
     }
+
+    @Test
+    void shouldReturnResultOfAddingMatrix() {
+        Matrix testMatrix = makeMatrix2x2();
+        testMatrix.addWith(testMatrix);
+
+        Matrix resultMatrix = new Matrix(2);
+        resultMatrix.matrix[0][0] = 0;
+        resultMatrix.matrix[0][1] = 2;
+        resultMatrix.matrix[1][0] = 2;
+        resultMatrix.matrix[1][1] = 4;
+
+        assertArrayEquals(resultMatrix.matrix, testMatrix.matrix);
+    }
+
+    @Test
+    void shouldReturnTrueIfOtherMatrixDifferentSize() {
+        Matrix firstMatrix = makeMatrix2x2();
+        Matrix originalMatrix = makeMatrix2x2();
+        Matrix otherMatrix = makeMatrix2x3();
+
+        firstMatrix.addWith(otherMatrix);
+
+        assertTrue(firstMatrix.equalto(originalMatrix));
+    }
+
+    @Test
+    void shouldReturnFalseIfOtherMatrixSameSize() {
+        Matrix firstMatrix = makeMatrix2x2();
+        Matrix originalMatrix = makeMatrix2x2();
+        Matrix otherMatrix = makeMatrix2x2();
+
+        firstMatrix.addWith(otherMatrix);
+
+        assertFalse(originalMatrix.equalto(firstMatrix));
+    }
+
+    @Test
+    void shouldReturnTrueIfAddingMatrixSucceed() {
+        Matrix testMatrix = makeMatrix2x2();
+        Matrix resultMatrix = testMatrix.add(testMatrix);
+
+        Matrix otherMatrix = makeMatrix2x2v2();
+
+        assertTrue(resultMatrix.equalto(otherMatrix));
+    }
+
+    @Test
+    void shouldReturnFalseIfOtherMatrixSameSizeAddMethod() {
+        Matrix firstMatrix = makeMatrix2x2();
+        Matrix otherMatrix = makeMatrix2x2();
+
+        Matrix resultMatrix = firstMatrix.add(otherMatrix);
+
+        assertFalse(resultMatrix.equalto(firstMatrix));
+    }
+
+    @Test
+    void shouldReturnNullIfOtherMatrixDiffeentSizeAddMethod() {
+        Matrix firstMatrix = makeMatrix2x2();
+        Matrix otherMatrix = makeMatrix2x3();
+
+        Matrix resultMatrix = firstMatrix.add(otherMatrix);
+
+        assertNull(resultMatrix);
+    }
+
+    @Test
+    void shouldReturnResultOfTransposingMatrix() {
+        Matrix testMatrix = makeMatrix2x2v3();
+        testMatrix.transpose();
+
+        Matrix resultMatrix = new Matrix(2);
+        resultMatrix.matrix[0][0] = 1;
+        resultMatrix.matrix[0][1] = 2;
+        resultMatrix.matrix[1][0] = 1;
+        resultMatrix.matrix[1][1] = 2;
+
+        assertArrayEquals(resultMatrix.matrix, testMatrix.matrix);
+    }
+
 
     public Matrix makeMatrix2x2() {
         Matrix testMatrix = new Matrix(2,2);
         testMatrix.matrix[0][0] = 0;
         testMatrix.matrix[0][1] = 1;
         testMatrix.matrix[1][0] = 1;
+        testMatrix.matrix[1][1] = 2;
+        return testMatrix;
+    }
+
+    public Matrix makeMatrix2x2v2() {
+        Matrix testMatrix = new Matrix(2,2);
+        testMatrix.matrix[0][0] = 0;
+        testMatrix.matrix[0][1] = 2;
+        testMatrix.matrix[1][0] = 2;
+        testMatrix.matrix[1][1] = 4;
+        return testMatrix;
+    }
+
+
+    public Matrix makeMatrix2x2v3() {
+        Matrix testMatrix = new Matrix(2,2);
+        testMatrix.matrix[0][0] = 1;
+        testMatrix.matrix[0][1] = 1;
+        testMatrix.matrix[1][0] = 2;
         testMatrix.matrix[1][1] = 2;
         return testMatrix;
     }
@@ -61,15 +164,3 @@ class MatrixTest {
         return testMatrix;
     }
 }
-
-//            @Test
-//            void addWith () {
-//            }
-//
-//            @Test
-//            void add () {
-//            }
-//
-//            @Test
-//            void transpose () {
-//            }

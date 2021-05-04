@@ -1,8 +1,11 @@
 package ex4;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 public class Matrix {
-    int rows;
-    int columns;
+    private int rows;
+    private int columns;
 
     int[][] matrix;
 
@@ -21,6 +24,12 @@ public class Matrix {
         this(rowsAndColumns, rowsAndColumns);
     }
 
+public Matrix (Matrix a) {
+        this.rows = a.rows;
+        this.columns = a.columns;
+        this.matrix = a.matrix;
+    }
+
     public int rows() {
         return rows;
     }
@@ -37,7 +46,22 @@ public class Matrix {
         matrix[rows][columns] = newValue;
     }
 
-    public boolean equalTo(Matrix other) {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Matrix matrix1 = (Matrix) o;
+        return rows == matrix1.rows && columns == matrix1.columns && Arrays.equals(matrix, matrix1.matrix);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(rows, columns);
+        result = 31 * result + Arrays.hashCode(matrix);
+        return result;
+    }
+
+    public boolean equalto(Matrix other) {
         if (this == other) return true;
         if (other == null || this.rows != other.rows || this.columns != other.columns) {
             return false;
@@ -52,7 +76,7 @@ public class Matrix {
 
     public void addWith(Matrix other) {
         if (other == null || this.rows != other.rows || this.columns != other.columns) {
-            System.out.println("You can only add matrix of the same size");
+            System.out.println("You can only addWith matrix of the same size");
         } else {
             for (int i = 0; i < this.rows; i++) {
                 for (int j = 0; j < this.columns; j++) {
@@ -82,11 +106,14 @@ public class Matrix {
         if (this.rows != this.columns) {
             System.out.println(" I can only transpose square Matrix - sorry ;-(");
         } else {
-            Matrix matrixCopy = new Matrix(this.rows);
-            matrixCopy.add(this);
+          final Matrix matrixCopy = new Matrix(this);
 
             for (int i = 0; i < this.rows; i++) {
                 for (int j = 0; j < this.columns; j++) {
+                    System.out.println(matrixCopy.matrix[0][0]);
+                    System.out.println(matrixCopy.matrix[0][1]);
+                    System.out.println(matrixCopy.matrix[1][0]);
+                    System.out.println(matrixCopy.matrix[1][1]);
                     this.set(i, j, matrixCopy.get(j, i));
                 }
             }
