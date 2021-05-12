@@ -24,10 +24,15 @@ public class Matrix {
         this(rowsAndColumns, rowsAndColumns);
     }
 
-public Matrix (Matrix a) {
+    public Matrix(Matrix a) {
         this.rows = a.rows;
         this.columns = a.columns;
-        this.matrix = a.matrix;
+        this.matrix = new int[this.rows][this.columns];
+        for (int i = 0; i < this.rows; i++) {
+            for (int j = 0; j < this.columns; j++) {
+                this.set(i,j, a.matrix[i][j]);
+            }
+        }
     }
 
     public int rows() {
@@ -86,12 +91,18 @@ public Matrix (Matrix a) {
         }
     }
 
-    public Matrix add(Matrix other) {
+    /**
+     * This add method accept Matrix object and returns Matrix object which is a sum of original Matrix and param
+     * @param other Matrix of the same size as original.
+     * @return Matrix object which is a sum of two Matrix - orginal and param
+     * @throws Exception when param is different size Matrix or null.
+     */
+    public Matrix add(Matrix other) throws Exception {
         Matrix resultMatrix = new Matrix(other.rows(), other.columns);
 
         if (other == null || this.rows != other.rows || this.columns != other.columns) {
-            System.out.println("You can only add matrix of the same size");
-            return null;
+            throw new Exception("You can only add matrix of the same size");
+
         } else {
             for (int i = 0; i < this.rows; i++) {
                 for (int j = 0; j < this.columns; j++) {
@@ -106,14 +117,10 @@ public Matrix (Matrix a) {
         if (this.rows != this.columns) {
             System.out.println(" I can only transpose square Matrix - sorry ;-(");
         } else {
-          final Matrix matrixCopy = new Matrix(this);
+            final Matrix matrixCopy = new Matrix(this);
 
             for (int i = 0; i < this.rows; i++) {
                 for (int j = 0; j < this.columns; j++) {
-                    System.out.println(matrixCopy.matrix[0][0]);
-                    System.out.println(matrixCopy.matrix[0][1]);
-                    System.out.println(matrixCopy.matrix[1][0]);
-                    System.out.println(matrixCopy.matrix[1][1]);
                     this.set(i, j, matrixCopy.get(j, i));
                 }
             }

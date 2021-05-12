@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
@@ -83,15 +82,19 @@ class MatrixTest {
     @Test
     void shouldReturnTrueIfAddingMatrixSucceed() {
         Matrix testMatrix = makeMatrix2x2();
-        Matrix resultMatrix = testMatrix.add(testMatrix);
+        try {
+            Matrix resultMatrix = testMatrix.add(testMatrix);
+            Matrix otherMatrix = makeMatrix2x2v2();
+            assertTrue(resultMatrix.equalto(otherMatrix));
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
 
-        Matrix otherMatrix = makeMatrix2x2v2();
-
-        assertTrue(resultMatrix.equalto(otherMatrix));
     }
 
     @Test
-    void shouldReturnFalseIfOtherMatrixSameSizeAddMethod() {
+    void shouldReturnFalseIfOtherMatrixSameSizeAddMethod() throws Exception {
         Matrix firstMatrix = makeMatrix2x2();
         Matrix otherMatrix = makeMatrix2x2();
 
@@ -101,13 +104,13 @@ class MatrixTest {
     }
 
     @Test
-    void shouldReturnNullIfOtherMatrixDiffeentSizeAddMethod() {
+    void shouldReturnNullIfOtherMatrixDiffeentSizeAddMethod() throws Exception {
         Matrix firstMatrix = makeMatrix2x2();
         Matrix otherMatrix = makeMatrix2x3();
 
         Matrix resultMatrix = firstMatrix.add(otherMatrix);
 
-        assertNull(resultMatrix);
+        //assertEquals(); - jak robić testy na Exception i dlaczego nie rzucamy Exception tylko jakąś klase dziecdziczącą po exception
     }
 
     @Test
@@ -117,13 +120,20 @@ class MatrixTest {
 
         Matrix resultMatrix = new Matrix(2);
         resultMatrix.matrix[0][0] = 1;
-        resultMatrix.matrix[0][1] = 2;
-        resultMatrix.matrix[1][0] = 1;
-        resultMatrix.matrix[1][1] = 2;
+        resultMatrix.matrix[0][1] = 3;
+        resultMatrix.matrix[1][0] = 2;
+        resultMatrix.matrix[1][1] = 4;
 
         assertArrayEquals(resultMatrix.matrix, testMatrix.matrix);
     }
 
+    @Test
+    void shouldReturnTrueIfMatrixIsIdentity() {
+        Matrix identity = makeMatrix2x2v4();
+        Matrix resultMatrix = Matrix.identityMatrix(2);
+
+        assertTrue(resultMatrix.equalto(identity));
+    }
 
     public Matrix makeMatrix2x2() {
         Matrix testMatrix = new Matrix(2,2);
@@ -147,9 +157,17 @@ class MatrixTest {
     public Matrix makeMatrix2x2v3() {
         Matrix testMatrix = new Matrix(2,2);
         testMatrix.matrix[0][0] = 1;
-        testMatrix.matrix[0][1] = 1;
-        testMatrix.matrix[1][0] = 2;
-        testMatrix.matrix[1][1] = 2;
+        testMatrix.matrix[0][1] = 2;
+        testMatrix.matrix[1][0] = 3;
+        testMatrix.matrix[1][1] = 4;
+        return testMatrix;
+    }
+    public Matrix makeMatrix2x2v4() {
+        Matrix testMatrix = new Matrix(2,2);
+        testMatrix.matrix[0][0] = 1;
+        testMatrix.matrix[0][1] = 0;
+        testMatrix.matrix[1][0] = 0;
+        testMatrix.matrix[1][1] = 1;
         return testMatrix;
     }
 
