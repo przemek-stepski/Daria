@@ -1,36 +1,38 @@
 package ex41;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-import java.io.File;
 
 public class ReadFromFile {
+    private static int strCounter = 0;
+    private static int plnCounter = 0;
+
+
     public static void main(String[] args) throws FileNotFoundException {
-        palindromAndStringCounter();
+        readFile("src/main/resources/palin.txt");
+        System.out.println("Strings no = " + strCounter);
+        System.out.println("Palindromes no = " + plnCounter);
     }
 
-    public static void palindromAndStringCounter() throws FileNotFoundException {
-        int stringCounter = 0;
-        int palinCounter = 0;
-
-        Scanner scanner = new Scanner(new File("/Users/pstepski/IdeaProjects/The Person class p.12/src/main/resources/palin.txt"));
-
-        while (scanner.hasNext()) {
-            stringCounter++;
-            palinCounter ++;
-
-            String stringFromFile = scanner.next();
-
-            for (int i = 0; i < stringFromFile.length() / 2; i++) {
-                if (stringFromFile.charAt(i) != stringFromFile.charAt(stringFromFile.length() - 1 - i)) {
-                    palinCounter--;
-                    break;
-                }
+    static boolean isPalindrom(String s) {
+        if (s == null) return false;
+        for (int i = 0; i < s.length() / 2; i++)
+            if (s.charAt(i) != s.charAt(s.length() - 1 - i)) {
+                return false;
             }
-        }
-            System.out.println("Strings = " + stringCounter);
-            System.out.println("Palindromes = " + palinCounter);
+        plnCounter++;
+        return true;
+    }
 
+
+    public static int readFile(String path) throws FileNotFoundException {
+        Scanner scanner = new Scanner(new File(path));
+        while (scanner.hasNext()) {
+            String strFromFile = scanner.next();
+            strCounter++;
+            isPalindrom(strFromFile);
+        }
+        return strCounter;
     }
 }
-

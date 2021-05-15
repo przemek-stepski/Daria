@@ -97,11 +97,11 @@ public class Matrix {
      * @return Matrix object which is a sum of two Matrix - orginal and param
      * @throws Exception when param is different size Matrix or null.
      */
-    public Matrix add(Matrix other) throws Exception {
+    public Matrix add(Matrix other) throws MartixDifferntSizeException {
         Matrix resultMatrix = new Matrix(other.rows(), other.columns);
 
         if (other == null || this.rows != other.rows || this.columns != other.columns) {
-            throw new Exception("You can only add matrix of the same size");
+            throw new MartixDifferntSizeException();
 
         } else {
             for (int i = 0; i < this.rows; i++) {

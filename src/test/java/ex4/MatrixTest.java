@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
@@ -104,14 +105,20 @@ class MatrixTest {
     }
 
     @Test
-    void shouldReturnNullIfOtherMatrixDiffeentSizeAddMethod() throws Exception {
+    void shouldThrowMatrixExceptionIfMatrixDifferentSizeAddMethod() {
         Matrix firstMatrix = makeMatrix2x2();
         Matrix otherMatrix = makeMatrix2x3();
 
-        Matrix resultMatrix = firstMatrix.add(otherMatrix);
-
-        //assertEquals(); - jak robić testy na Exception i dlaczego nie rzucamy Exception tylko jakąś klase dziecdziczącą po exception
+        assertThrows(MartixDifferntSizeException.class, ()->firstMatrix.add(otherMatrix));
     }
+
+//    @Test(expected = NullPointerException.class)
+//    public void whenExceptionThrown_thenExpectationSatisfied() {
+//        Matrix firstMatrix = makeMatrix2x2();
+//        Matrix otherMatrix = makeMatrix2x3();
+//        Matrix result = firstMatrix.add(otherMatrix);
+//
+    //}
 
     @Test
     void shouldReturnResultOfTransposingMatrix() {
