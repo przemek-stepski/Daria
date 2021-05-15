@@ -27,11 +27,12 @@ public class ReadFromFile {
 
 
     public static int readFile(String path) throws FileNotFoundException {
-        Scanner scanner = new Scanner(new File(path));
-        while (scanner.hasNext()) {
-            String strFromFile = scanner.next();
-            strCounter++;
-            isPalindrom(strFromFile);
+        try (Scanner scanner = new Scanner(new File(path))) {
+            while (scanner.hasNext()) {
+                String strFromFile = scanner.next();
+                strCounter++;
+                isPalindrom(strFromFile);
+            }
         }
         return strCounter;
     }
